@@ -1,23 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
 
 function App() {
+  const [task, setTask] = useState('');// כאן ננהל את המצב של המשימה החדשה
+  const [tasks, setTasks] = useState([]);
+
+  const addTask = () => {
+    console.log('Task added:', task); // בשלב זה פשוט נכתוב את המשימה בקונסול
+    if(task){
+      setTasks([...tasks,task]); // הוספת המשימה לרשימה
+      setTask(''); // ננקה את השדה לאחר ההוספה
+    }
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>To-Do List</h1>
+      <input 
+        type="text" 
+        value={task}
+        onChange={(e)=>setTask(e.target.value)}  // שינוי ערך הקלט
+        placeholder="Add a task..." 
+      />
+      <button onClick={addTask}>Add task</button>
+      <ul>
+        {tasks.map((t, index) => (
+          <li key={index}>{t}</li> // הצגת המשימות ברשימה
+        ))}
+      </ul>
     </div>
   );
 }
